@@ -15,10 +15,21 @@
    float?
    scalar-type?
    c-type?
-   join)
+   join
+   make-begin)
  (import
    (rnrs)
    (elegant-weapons match))
+
+ (define make-begin
+   (lambda (exp*)
+     (match
+       (match `(begin . ,exp*)
+         ((begin ,[x] ...)
+          (apply append x))
+         (,x `(,x)))
+       ((,x) x)
+       ((,x ...) `(begin . ,x)))))
 
  (define join
    (lambda (sep strings)
