@@ -18,8 +18,7 @@
    join)
  (import
    (rnrs)
-   (elegant-weapons match)
-   (only (chezscheme) with-implicit))
+   (elegant-weapons match))
 
  (define join
    (lambda (sep strings)
@@ -29,6 +28,13 @@
        ((,a ,b) (string-append a sep b))
        ((,a ,b* ...)
         (string-append a sep (join sep b*))))))
+
+ ;; From http://scheme.com/csug8/syntax.html#./syntax:s11
+ (define-syntax with-implicit
+  (syntax-rules ()
+    [(_ (tid id ...) b1 b2 ...)
+     (with-syntax ([id (datum->syntax #'tid 'id)] ...)
+       b1 b2 ...)]))
  
  ;; This abstracts away most of the boilerplate for writing
  ;; match-based transformations. A little unsafe.
