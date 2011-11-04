@@ -99,8 +99,10 @@
           match/lexical-context trace-match/lexical-context
           match-equality-test
           guard ... quasiquote unquote unquote-splicing)
-  (import (chezscheme))
-
+  (import (rnrs)
+          (rnrs mutable-pairs)
+          (elegant-weapons compat))
+  
 (define match-equality-test
   (make-parameter
     equal?
