@@ -138,7 +138,7 @@
     ((if ,[format-expr -> test] ,[conseq])
      (string-append "if(" test ")" conseq))
     ((if ,[format-expr -> test] ,[conseq] ,[alt])
-     (string-append "if(" test ")\n" conseq "}\nelse {\n" alt "}"))
+     (string-append "if(" test ")\n" conseq "\nelse \n" alt))
     ((return ,[format-expr -> expr])
      (string-append "return " expr ";"))
     ((print ,[format-expr -> expr])
