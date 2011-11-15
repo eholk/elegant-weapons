@@ -16,7 +16,14 @@
    scalar-type?
    c-type?
    join
-   make-begin)
+   make-begin
+
+   ;; match exports
+   match trace-match 
+   match+ trace-match+
+   match/lexical-context trace-match/lexical-context
+   match-equality-test
+   guard ... quasiquote unquote unquote-splicing)
  (import
    (rnrs)
    (elegant-weapons match))
