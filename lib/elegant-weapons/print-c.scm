@@ -137,18 +137,21 @@
           ,[format-expr -> expr])
      (indent-before
        (string-append type " " ident " = " expr ";")))
-    ((if ,[format-expr -> test] ,[conseq])
-     (indent-before
-       (string-append "if(" test ")" conseq)))
-    ((if ,[format-expr -> test] ,[conseq] ,[alt])
-     (indent-before
-       (string-append "if(" test ")\n" conseq "\nelse \n" alt)))
+    ((if ,[format-expr -> test] ,conseq)
+     (string-append
+       (indent-before (string-append "if(" test ")\n"))
+       (indent-more (format-stmt conseq))))
+    ((if ,[format-expr -> test] ,conseq ,alt)
+     (string-append
+       (indent-before (string-append "if(" test ")\n"))
+       (indent-more (format-stmt conseq))
+       "\n"
+       (indent-before "else\n")
+       (indent-more (format-stmt alt))))
     ((return ,[format-expr -> expr])
-     (indent-before
-       (string-append "return " expr ";")))
+     (indent-before (string-append "return " expr ";")))
     ((print ,[format-expr -> expr])
-     (indent-before
-       (string-append "print(" expr ");")))
+     (indent-before (string-append "print(" expr ");")))
     ((set! ,[format-expr -> x] ,[format-expr -> v])
      (indent-before
        (string-append x " = " v ";")))
@@ -156,8 +159,7 @@
        ,[format-expr -> i-expr] ,[format-expr -> val-expr])
      (indent-before
        (string-append vec-expr "[" i-expr "] = " val-expr ";")))
-    ((while ,[format-expr -> expr]
-       ,stmt)
+    ((while ,[format-expr -> expr] ,stmt)
      (string-append
        (indent-before (string-append "while(" expr ")\n"))
        (indent-more (format-stmt stmt))))
