@@ -15,6 +15,7 @@
    float?
    scalar-type?
    c-type?
+   cl-type?
    join
    make-begin
 
@@ -66,22 +67,25 @@
             (lambda (arg)
               (match arg
                 clauses ...
-                (,else (error 'name "Unrecognized item" else)))))))
+                (,else
+                  (error 'name "Unrecognized item" else)))))))
      ((k name clauses ...)
       (with-implicit (k match)
         #'(define name
             (lambda (arg)
               (match arg
                 clauses ...
-                (,else (error 'name "Unrecognized item" else)))))))))
- 
+                (,else
+                  (error 'name "Unrecognized item" else)))))))))
+
  (define gensym
    (let ((c 0))
      (lambda (x)
        (unless (symbol? x) (error 'gensym "invalid symbol" x))
        (set! c (+ 1 c))
        (string->symbol
-         (string-append (symbol->string x) "_" (number->string c))))))
+         (string-append
+           (symbol->string x) "_" (number->string c))))))
 
  (define iota
    (lambda (n)
@@ -99,7 +103,7 @@
 (define decode-vector-type
   (lambda (t)
     (match t
-      ((vector ,[dim t sz] ,len)
+      ((vec ,[dim t sz] ,len)
        (values (+ 1 dim) t `(* (int ,len) ,sz)))
       (,t (values 0 t `(sizeof ,t))))))
 
@@ -143,12 +147,18 @@
  (define (scalar-type? t)
    (case t
      ;; TODO: strings aren't quite scalars
-     ((int u64 void str float cl::queue cl::kernel cl::program) #t)
+     ((int u64 void str float) #t)
      (else #f)))
 
 (define (c-type? t)
   (case t
-    ((int uint64_t void float cl::queue cl::kernel cl::program char) #t)
+    ((int uint64_t void float char)
+     #t)
+    (else #f)))
+
+(define (cl-type? t)
+  (case t
+    ((cl::queue cl::kernel cl::program) #t)
     (else #f)))
 
 )
