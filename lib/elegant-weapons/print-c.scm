@@ -176,6 +176,8 @@
      (indent-before (string-append e ";"))))
 
   (define-match format-decl
+    ((include ,header)
+     (string-append "#include \"" header "\"\n\n"))
     ((global ,type ,name ,args ...)
      (string-append
        (format-type type) " " (format-ident name)
@@ -194,7 +196,6 @@
   (define format-c
     (lambda (decls)
       (string-append
-        "#include \"harlan.hpp\"\n\n"
         (join "\n\n" (map format-decl decls))
         "\n")))
   
