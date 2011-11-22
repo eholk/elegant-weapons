@@ -23,3 +23,8 @@
     
 (print-parse-roundtrip
  '((func int main () (return (int 0)))))
+
+(print-parse-roundtrip
+ '((func int main ()
+         (let x int (int 0))
+         (return (var x)))))

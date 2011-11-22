@@ -12,7 +12,7 @@
       "return"))
 
   (define (punctuation? c)
-    (member c '(#\{ #\} #\( #\) #\;)))
+    (member c '(#\{ #\} #\( #\) #\; #\=)))
 
   (define (word-char? c)
     (char-alphabetic? c))
@@ -50,7 +50,9 @@
 
   
   (define (parse-c tokens)
-    (call/cc (lambda (k) (parse-decls tokens '() k))))
+    (call/cc (lambda (k)
+               (parse-decls tokens '() k)
+               (error 'parse-c "Failed to parse tokens."))))
 
   (define (parse-decls tokens decls k)
     (if (null? tokens)
@@ -76,8 +78,7 @@
     (let ((t (car tokens))
           (tokens (cdr tokens)))
       (if (equal? "int" t)
-          (k tokens 'int)
-          (error 'parse-type "Invalid type" t tokens))))
+          (k tokens 'int))))
 
   (define-match (parse-arguments k)
     ((#\( #\) . ,rest)
@@ -100,21 +101,35 @@
     (k tokens stmts))
 
   (define (parse-statement tokens k)
+    ;; try to parse a return statement
     (let ((t (car tokens))
           (tokens (cdr tokens)))
-      (cond
-        ((equal? t "return")
-         (parse-expr tokens
-                     (lambda (tokens expr)
-                       (if (equal? (car tokens) #\;)
-                           (k (cdr tokens) `(return ,expr)))))))))
+      (if (equal? t "return")
+          (parse-expr tokens
+                      (lambda (tokens expr)
+                        (if (equal? (car tokens) #\;)
+                            (k (cdr tokens) `(return ,expr)))))))
+    ;; try to parse a declaration
+    (parse-type tokens
+                (lambda (tokens type)
+                  (let ((name (string->symbol (car tokens)))
+                        (eq (cadr tokens))
+                        (tokens (cddr tokens)))
+                    (parse-expr tokens
+                                (lambda (tokens expr)
+                                  (if (equal? (car tokens) #\;)
+                                      (k (cdr tokens)
+                                         `(let ,name ,type ,expr)))))))))
 
   (define (parse-expr tokens k)
     (let ((t (car tokens))
           (tokens (cdr tokens)))
       (cond
         ((integer? t)
-         (k tokens `(int ,t))))))
-  
+         (k tokens `(int ,t)))
+        ;; Identifier
+        ((string? t)
+         (k tokens `(var ,(string->symbol t)))))))
+         
   ;; end library
   )
