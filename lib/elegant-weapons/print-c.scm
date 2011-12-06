@@ -186,11 +186,15 @@
            (string-append "(" (format-call-args args) ")"))
        ";"))
     ((func ,[format-type -> type] ,[format-ident -> name]
-       ,[format-args -> args] ,stmt* ...)
+           ,[format-args -> args] (begin ,stmt* ...))
      (string-append type " " name "(" args ")\n"
-       (format-stmt `(begin . ,stmt*))))
+                    (format-stmt `(begin . ,stmt*))))
+    ((func ,[format-type -> type] ,[format-ident -> name]
+           ,[format-args -> args] ,stmt* ...)
+     (string-append type " " name "(" args ")\n"
+                    (format-stmt `(begin . ,stmt*))))
     ((extern ,[format-type -> type] ,[format-ident -> name]
-       (,[format-type -> args] ...))
+             (,[format-type -> args] ...))
      (string-append type " " name "(" (join ", " args) ");\n")))
   
   (define format-c
