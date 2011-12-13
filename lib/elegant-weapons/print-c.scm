@@ -148,7 +148,7 @@
        "\n"
        (indent-before "else\n")
        (indent-more (format-stmt alt))))
-    ((return (void))
+    ((return)
      (indent-before (string-append "return;")))
     ((return ,[format-expr -> expr])
      (indent-before (string-append "return " expr ";")))
