@@ -147,7 +147,7 @@
  (define (scalar-type? t)
    (case t
      ;; TODO: strings aren't quite scalars
-     ((int u64 void str float bool) #t)
+     ((int u64 void str float bool char) #t)
      (else #f)))
 
 (define (c-type? t)
