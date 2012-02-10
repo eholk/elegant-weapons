@@ -33,13 +33,13 @@
       (unless (symbol? ident)
         (error 'format-ident "invalid symbol" ident))
       (symbol->string ident)))
-
+    
   (define-match format-type
     (u64 "uint64_t")
     ((ptr ,[t])
-     (string-append "__global " t "*"))
+     (string-append t " __global *"))
     ((const-ptr ,[t])
-     (string-append "__global const " t "*"))
+     (string-append t " __global const *"))
     ((,[t] ,[t*] ...)
      (if (null? t*)
          t
