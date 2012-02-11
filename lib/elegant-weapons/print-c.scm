@@ -91,6 +91,13 @@
               (else (string (string-ref s 0))))
             (escape-string-literal
               (substring s 1 (string-length s)))))))
+
+  (define (format-char-literal c)
+    (string-append "'"
+                   (case c
+                     ((#\nul) "\\0")
+                     (else (string c)))
+                   "'"))
   
   (define-match format-expr
     ((field ,[format-ident -> obj] ,x)
@@ -118,6 +125,7 @@
     ((assert ,[expr])
      (string-append "assert(" expr ")"))
     ((var ,var) (symbol->string var))
+    ((char ,c) (format-char-literal c))
     ((int ,n) (number->string n))
     ((u64 ,n) (number->string n))
     ((str ,s) (string-append "\"" (escape-string-literal s) "\""))
@@ -148,6 +156,8 @@
        "\n"
        (indent-before "else\n")
        (indent-more (format-stmt alt))))
+    ((return)
+     (indent-before (string-append "return;")))
     ((return ,[format-expr -> expr])
      (indent-before (string-append "return " expr ";")))
     ((print ,[format-expr -> expr])

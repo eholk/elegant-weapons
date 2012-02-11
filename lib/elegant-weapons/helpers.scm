@@ -147,12 +147,12 @@
  (define (scalar-type? t)
    (case t
      ;; TODO: strings aren't quite scalars
-     ((int u64 void str float) #t)
+     ((int u64 void str float bool char) #t)
      (else #f)))
 
 (define (c-type? t)
   (case t
-    ((int uint64_t void float char)
+    ((int uint64_t void float char bool)
      #t)
     (else #f)))
 
