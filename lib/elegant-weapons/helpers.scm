@@ -24,7 +24,7 @@
    match+ trace-match+
    match/lexical-context trace-match/lexical-context
    match-equality-test
-   guard ... quasiquote unquote unquote-splicing)
+   guard ... quasiquote unquote unquote-splicing ->)
  (import
    (rnrs)
    (elegant-weapons match))
