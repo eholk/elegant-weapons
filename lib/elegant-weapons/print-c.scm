@@ -199,13 +199,13 @@
            (string-append "(" (format-call-args args) ")"))
        ";"))
     ((func ,[format-type -> type] ,[format-ident -> name]
-           ,[format-args -> args] (begin ,stmt* ...))
+           ,[format-args -> args] ,stmt)
      (string-append type " " name "(" args ")\n"
-                    (format-stmt `(begin . ,stmt*))))
-    ((func ,[format-type -> type] ,[format-ident -> name]
-           ,[format-args -> args] ,stmt* ...)
-     (string-append type " " name "(" args ")\n"
-                    (format-stmt `(begin . ,stmt*))))
+                    (format-stmt stmt)))
+    ((kernel-func ,[format-type -> type] ,[format-ident -> name]
+                  ,[format-args -> args] ,stmt)
+     (string-append "__global__ " type " " name "(" args ")\n"
+                    (format-stmt stmt)))
     ((extern ,[format-type -> type] ,[format-ident -> name]
              (,[format-type -> args] ...))
      (string-append type " " name "(" (join ", " args) ");\n")))
