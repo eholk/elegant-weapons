@@ -132,7 +132,10 @@
     ((float ,f) (number->string f))
     ((c-expr ,t ,x) (symbol->string x))
     ((call ,[f] . ,[format-call-args -> args])
-     (string-append f "(" args ")")))
+     (string-append f "(" args ")"))
+    ((kernel-call ,[f] (,[grid-dim] ,[block-dim])
+                  . ,[format-call-args -> args])
+     (string-append f "<<< " grid-dim ", " block-dim " >>>" "(" args ")")))
   
   (define-match format-stmt
     ((begin ,stmt* ...)
