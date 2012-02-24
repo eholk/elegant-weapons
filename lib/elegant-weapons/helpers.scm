@@ -146,13 +146,14 @@
  
  (define (scalar-type? t)
    (case t
-     ;; TODO: strings aren't quite scalars
-     ((int u64 void str float bool char) #t)
+     ;; TODO: strings aren't quite scalars, and regions definitely
+     ;; aren't.
+     ((int u64 void str float bool char region_ptr region) #t)
      (else #f)))
 
 (define (c-type? t)
   (case t
-    ((int uint64_t void float char bool)
+    ((int uint64_t void float char bool region_ptr region)
      #t)
     (else #f)))
 
