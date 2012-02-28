@@ -8,8 +8,13 @@
         s
         (cons x s)))
   
-  (define (union s . s*)
-    (fold-left (lambda (s1 s2) (fold-left set-add s1 s2)) s s*))
+  (define union
+    (lambda  s*
+      (cond
+        ((null? s*) `())
+        (else
+          (let ((s (car s*)) (s* (cdr s*)))
+            (fold-left (lambda (s1 s2) (fold-left set-add s1 s2)) s s*))))))
 
   (define (intersection s . s*)
     (fold-left (lambda (s1 s2)
