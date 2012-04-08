@@ -201,7 +201,7 @@
     ((func ,[format-type -> type] ,[format-ident -> name]
            ,[format-args -> args] ,stmt)
      (string-append type " " name "(" args ") {\n"
-       (format-stmt stmt)
+       (indent-more (format-stmt stmt))
        "\n}\n"))
     ((kernel-func ,[format-type -> type] ,[format-ident -> name]
                   ,[format-args -> args] ,stmt)
