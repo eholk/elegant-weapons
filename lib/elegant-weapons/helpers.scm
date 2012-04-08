@@ -36,7 +36,7 @@
          ((begin ,[x] ...)
           (apply append x))
          (,x `(,x)))
-       ((,x) `(begin ,x))
+       ((,x) x)
        ((,x ...) `(begin . ,x)))))
 
  (define join
