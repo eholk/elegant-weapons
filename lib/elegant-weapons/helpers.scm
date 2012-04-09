@@ -148,12 +148,12 @@
    (case t
      ;; TODO: strings aren't quite scalars, and regions definitely
      ;; aren't.
-     ((int u64 void str float bool char region_ptr region) #t)
+     ((int u64 void str float bool char region_ptr region cl_mem) #t)
      (else #f)))
 
 (define (c-type? t)
   (case t
-    ((int uint64_t void float char bool region_ptr region)
+    ((int uint64_t void float char bool region_ptr region cl_mem)
      #t)
     (else #f)))
 
