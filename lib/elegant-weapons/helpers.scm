@@ -103,7 +103,7 @@
 (define decode-vector-type
   (lambda (t)
     (match t
-      ((vec ,[dim t sz] ,len)
+      ((vec ,len ,[dim t sz])
        (values (+ 1 dim) t `(* (int ,len) ,sz)))
       (,t (values 0 t `(sizeof ,t))))))
 
