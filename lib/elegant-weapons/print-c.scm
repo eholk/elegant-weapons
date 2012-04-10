@@ -86,7 +86,7 @@
           ""
           (string-append
             (case (string-ref s 0)
-              ((#\newline) "\\n")
+              ((#\newline) "\\n\"\n\"")
               ((#\") "\\\"")
               (else (string (string-ref s 0))))
             (escape-string-literal
