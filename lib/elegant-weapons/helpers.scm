@@ -50,6 +50,7 @@
      (with-syntax ([id (datum->syntax #'tid 'id)] ...)
        b1 b2 ...)]))
 
+<<<<<<< HEAD
 ;; This abstracts away most of the boilerplate for writing
 ;; match-based transformations. A little unsafe.
 ;; Stipulation: make sure the match macro is in the environment
@@ -123,7 +124,7 @@
 
 (define (cl-type? t)
   (case t
-    ((cl::queue cl::kernel cl::program) #t)
+    ((std::ofstream cl::queue cl::kernel cl::program) #t)
     (else #f)))
 
 )
