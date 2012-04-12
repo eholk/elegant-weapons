@@ -54,24 +54,25 @@
 ;; match-based transformations. A little unsafe.
 ;; Stipulation: make sure the match macro is in the environment
 ;; everywhere this macro is used.
-(define-syntax (define-match x)
-  (syntax-case x ()
-    ((k (name args ...) clauses ...)
-     (with-implicit (k match)
-       #'(define (name args ...)
-           (lambda (arg)
-             (match arg
-               clauses ...
-               (,else
-                 (error 'name "Unrecognized item" else)))))))
-    ((k name clauses ...)
-     (with-implicit (k match)
-       #'(define name
-           (lambda (arg)
-             (match arg
-               clauses ...
-               (,else
-                 (error 'name "Unrecognized item" else)))))))))
+(define-syntax define-match
+  (lambda (x)
+    (syntax-case x ()
+      ((k (name args ...) clauses ...)
+       (with-implicit (k match)
+                      #'(define (name args ...)
+                          (lambda (arg)
+                            (match arg
+                              clauses ...
+                              (,else
+                               (error 'name "Unrecognized item" else)))))))
+      ((k name clauses ...)
+       (with-implicit (k match)
+                      #'(define name
+                          (lambda (arg)
+                            (match arg
+                              clauses ...
+                              (,else
+                               (error 'name "Unrecognized item" else))))))))))
 
 (define gensym
   (let ((c 0))
