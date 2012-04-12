@@ -117,7 +117,7 @@
 
 (define (c-type? t)
   (case t
-    ((int uint64_t void float char bool)
+    ((int uint64_t void float char bool cl_mem)
      #t)
     (else #f)))
 
