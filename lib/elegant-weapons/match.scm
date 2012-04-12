@@ -103,8 +103,9 @@
           (rnrs mutable-pairs)
           (elegant-weapons compat))
 
-(define-syntax (-> x)
-  (syntax-violation #f "misplaced aux keyword" x))
+(define-syntax ->
+  (lambda (x)
+    (syntax-violation #f "misplaced aux keyword" x)))
   
 (define match-equality-test
   (make-parameter
