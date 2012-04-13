@@ -165,6 +165,8 @@
      (indent-before (string-append "return " expr ";")))
     ((print ,[format-expr -> expr])
      (indent-before (string-append "print(" expr ");")))
+    ((print ,[format-expr -> e] ,[format-expr -> op])
+     (indent-before (string-append "print(" e ", " op ");")))
     ((set! ,[format-expr -> x] ,[format-expr -> v])
      (indent-before
        (string-append x " = " v ";")))
