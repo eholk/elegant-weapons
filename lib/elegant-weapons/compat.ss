@@ -1,6 +1,7 @@
 (library
     (elegant-weapons compat)
-  (export add1 sub1 syntax-error make-parameter last-pair make-list void)
+  (export add1 sub1 syntax-error make-parameter parameterize
+    last-pair make-list void)
   (import (rnrs))
   
   ;; This file provides least-common-denominator implementations of
@@ -26,6 +27,21 @@
            (() value)
            ((new-value)
             (set! value (filter new-value))))))))
+
+  ;; This is from the Chez Scheme Version 8 User Guide
+  ;; http://www.scheme.com/csug8/system.html#./system:s167
+  (define-syntax parameterize
+    (lambda (x)
+      (syntax-case x ()
+        [(_ () e1 e2 ...) (syntax (begin e1 e2 ...))]
+        [(_ ([x v] ...) e1 e2 ...)
+         (with-syntax ([(p ...) (generate-temporaries (syntax (x ...)))]
+                       [(y ...) (generate-temporaries (syntax (x ...)))])
+           (syntax
+             (let ([p x] ... [y v] ...)
+               (let ([swap (lambda ()
+                             (let ([t (p)]) (p y) (set! y t)) ...)])
+                 (dynamic-wind swap (lambda () e1 e2 ...) swap)))))])))
 
   (define (last-pair ls)
     (if (null? (cdr ls))
