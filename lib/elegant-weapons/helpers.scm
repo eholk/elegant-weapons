@@ -13,6 +13,7 @@
     cl-type?
     join
     make-begin
+    symbol-append
 
     ;; match exports
     match trace-match 
@@ -127,4 +128,7 @@
     ((std::ofstream cl::queue cl::kernel cl::program) #t)
     (else #f)))
 
+(define (symbol-append . syms)
+  (string->symbol
+   (apply string-append (map symbol->string syms))))
 )
