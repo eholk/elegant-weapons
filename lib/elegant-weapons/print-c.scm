@@ -124,6 +124,7 @@
      (string-append "(" lhs ") " (relop->string op) " (" rhs ")"))
     ((assert ,[expr])
      (string-append "assert(" expr ")"))
+    ((bool ,b) (if (not b) "false" "true"))
     ((var ,var) (symbol->string var))
     ((char ,c) (format-char-literal c))
     ((int ,n) (number->string n))
