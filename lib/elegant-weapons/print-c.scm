@@ -176,7 +176,7 @@
       ((u64 ,n) (number->string n))
       ((str ,s) (string-append "\"" (escape-string-literal s) "\""))
       ((float ,f) (number->string f))
-      ((c-expr ,t ,x) (symbol->string x))
+      ((c-expr ,x) (symbol->string x))
       ((call ,[format-expr -> f] . ,[format-call-args -> args])
        (string-append f "(" args ")"))
       (,else (error 'format-expr "could not format" else))))
