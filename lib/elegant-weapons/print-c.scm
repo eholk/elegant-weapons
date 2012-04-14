@@ -135,7 +135,8 @@
              "for(int " i " = " start "; " i " < " end "; ++" i ")\n"))
          (indent-more (format-stmt stmt))))
       ((do ,[format-expr -> e])
-       (indent-before (string-append e ";")))))
+       (indent-before (string-append e ";")))
+      (,else (error 'format-stmt "could not format" else))))
   (define stmt-fns (make-parameter `(,format-stmt-default)))
   (define format-stmt (format-sexp stmt-fns))
 
@@ -174,7 +175,8 @@
       ((float ,f) (number->string f))
       ((c-expr ,t ,x) (symbol->string x))
       ((call ,[f] . ,[format-call-args -> args])
-       (string-append f "(" args ")"))))
+       (string-append f "(" args ")"))
+      (,else (error 'format-expr "could not format" else))))
   (define expr-fns (make-parameter `(,format-expr-default)))
   (define format-expr (format-sexp expr-fns))
   
