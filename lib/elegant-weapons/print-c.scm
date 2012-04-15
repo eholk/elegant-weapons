@@ -134,6 +134,16 @@
            (string-append
              "for(int " i " = " start "; " i " < " end "; ++" i ")\n"))
          (indent-more (format-stmt stmt))))
+      ((for (,[format-ident -> i]
+             ,[format-expr -> start]
+             ,[format-expr -> end]
+             ,[format-expr -> step])
+         ,stmt)
+       (string-append
+         (indent-before
+           (string-append
+             "for(int " i " = " start "; " i " < " end "; " i "= (" i " + " step "))\n"))
+         (indent-more (format-stmt stmt))))
       ((do ,[format-expr -> e])
        (indent-before (string-append e ";")))
       (,else (error 'format-stmt "could not format" else))))
