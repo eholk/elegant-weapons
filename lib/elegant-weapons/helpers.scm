@@ -5,6 +5,7 @@
     iota
     define-match
     andmap
+    ormap
     binop?
     relop?
     float?
@@ -93,9 +94,13 @@
 
 (define andmap
   (lambda (p ls)
-    (if (null? ls)
-        #t
+    (or (null? ls)
         (and (p (car ls)) (andmap p (cdr ls))))))
+
+(define ormap
+  (lambda (p ls)
+    (and (not (null? ls))
+         (or (p (car ls)) (ormap p (cdr ls))))))
 
 (define binop?
   (lambda (op)
