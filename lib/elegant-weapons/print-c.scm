@@ -95,6 +95,9 @@
             ,[format-expr -> expr])
        (indent-before
          (string-append type " " ident " = " expr ";")))
+      ((let ,[format-ident -> ident] ,[format-type -> type])
+       (indent-before
+        (string-append type " " ident ";")))
       ((if ,[format-expr -> test] ,conseq)
        (string-append
          (indent-before (string-append "if(" test ")\n"))
