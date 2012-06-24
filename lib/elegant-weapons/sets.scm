@@ -25,6 +25,9 @@
 
   (define (difference s1 s2)
     (filter (lambda (x) (not (member x s2))) s1))
+
+  (define (subset? s1 s2)
+    (andmap (lambda (x) (member x s2)) s1))
   
   ;; end library
   )
