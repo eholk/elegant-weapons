@@ -5,7 +5,6 @@
     iota
     define-match
     andmap
-    ormap
     binop?
     relop?
     float?
