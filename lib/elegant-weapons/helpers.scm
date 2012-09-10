@@ -5,6 +5,7 @@
     iota
     define-match
     andmap
+    ident?
     binop?
     relop?
     float?
@@ -100,6 +101,8 @@
   (lambda (p ls)
     (and (not (null? ls))
          (or (p (car ls)) (ormap p (cdr ls))))))
+
+(define ident? symbol?)
 
 (define binop?
   (lambda (op)
