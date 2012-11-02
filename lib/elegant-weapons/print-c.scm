@@ -180,6 +180,8 @@
       ((,op ,[format-expr -> lhs] ,[format-expr -> rhs])
        (guard (relop? op))
        (string-append "(" lhs ") " (format-relop op) " (" rhs ")"))
+      ((not ,[format-expr -> lhs])
+       (string-append "!(" lhs ")"))
       ((assert ,[format-expr -> expr])
        (string-append "assert(" expr ")"))
       ((bool ,b) (if (not b) "false" "true"))
