@@ -185,7 +185,7 @@
       ((assert ,[format-expr -> expr])
        (string-append "assert(" expr ")"))
       ((bool ,b) (if (not b) "false" "true"))
-      ((var ,var) (symbol->string var))
+      ((var ,var) (format-ident var))
       ((char ,c) (format-char-literal c))
       ((int ,n) (number->string n))
       ((u64 ,n) (number->string n))
@@ -197,11 +197,24 @@
       (,else (error 'format-expr "could not format" else))))
   (define expr-fns (make-parameter `(,format-expr-default)))
   (define format-expr (format-sexp expr-fns))
+
+  (define (mangle-ident x)
+    (let ((y ""))
+      (define (push c)
+        (set! y (string-append y c)))
+      (string-for-each
+       (lambda (c)
+         (case c
+           (#\- (push "$"))
+           (#\$ (push "$$"))
+           (else (push (string c)))))
+       x)
+      y))
   
   (define (format-ident-default ident _)
     (unless (symbol? ident)
       (error 'format-ident "could not format" ident))
-    (symbol->string ident))
+    (mangle-ident (symbol->string ident)))
   (define ident-fns (make-parameter `(,format-ident-default)))
   (define format-ident (format-sexp ident-fns))
 
