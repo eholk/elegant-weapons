@@ -205,8 +205,8 @@
       (string-for-each
        (lambda (c)
          (case c
-           (#\- (push "$"))
-           (#\$ (push "$$"))
+           ((#\-) (push "$"))
+           ((#\$) (push "$$"))
            (else (push (string c)))))
        x)
       y))
