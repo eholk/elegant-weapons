@@ -207,6 +207,7 @@
          (case c
            ((#\-) (push "$"))
            ((#\$) (push "$$"))
+           ((#\.) (push "$_"))
            (else (push (string c)))))
        x)
       y))
