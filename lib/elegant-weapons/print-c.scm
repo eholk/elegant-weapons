@@ -79,6 +79,8 @@
       ((extern ,[format-type -> type] ,[format-ident -> name]
          (,[format-type -> args] ...))
        (string-append type " " name "(" (join ", " args) ");\n"))
+      ((typedef ,[format-ident -> name] ,[format-type -> type])
+       (string-append "typedef " type " " name " ;\n"))
       (,else (error 'format-decl "could not format" else))))
   (define decl-fns (make-parameter `(,format-decl-default)))
   (define format-decl (format-sexp decl-fns))
@@ -228,6 +230,22 @@
        (string-append t " &"))
       ((const-ptr ,[t])
        (string-append t " __global const *"))
+      ((struct (,[format-ident -> x] ,[t]) ...)
+       (string-append "struct {\n"
+                      (indent-more
+                       (join "" (map (lambda (x t)
+                                       (indent-before
+                                        (string-append t " " x ";\n")))
+                                     x t)))
+                      "}"))
+      ((union (,[format-ident -> x] ,[t]) ...)
+       (string-append "union {\n"
+                      (indent-more
+                       (join "" (map (lambda (x t)
+                                       (indent-before
+                                        (string-append t " " x ";\n")))
+                                     x t)))
+                      "}"))
       ((,[t] ,[t*] ...)
        (if (null? t*)
            t
