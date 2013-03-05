@@ -1,6 +1,6 @@
 (library
     (elegant-weapons sets)
-  (export union set-add difference intersection subset?)
+  (export union set-add difference intersection subset? set-equal?)
   (import (rnrs)
           (elegant-weapons compat))
 
@@ -30,6 +30,9 @@
   (define (subset? s1 s2)
     (andmap (lambda (x) (member x s2)) s1))
 
+  (define (set-equal? s1 s2)
+    (and (subset? s1 s2) (subset? s2 s1)))
+  
   (define (andmap p . ls*)
     (if (null? (car ls*))
         #t
