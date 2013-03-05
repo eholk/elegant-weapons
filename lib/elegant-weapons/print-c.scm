@@ -251,7 +251,7 @@
            t
            (string-append t "< " (join ", " t*) " >")))
       (,x (guard (symbol? x))
-        (symbol->string x))
+          (format-ident x))
       (,else (error 'format-type "could not format" else))))
   (define type-fns (make-parameter `(,format-type-default)))
   (define format-type (format-sexp type-fns))
