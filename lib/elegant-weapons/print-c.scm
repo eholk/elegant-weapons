@@ -157,10 +157,10 @@
 
   (define (format-expr-default expr _)
     (match expr
-      ((field ,[format-ident -> obj] ,x)
-       (string-append obj "." (symbol->string x)))
-      ((field ,[format-ident -> obj] ,x ,[format-type -> t])
-       (string-append obj "." (symbol->string x) "<" t ">"))
+      ((field ,[obj] ,x)
+       (string-append obj "." (format-ident x)))
+      ((field ,[obj] ,x ,[format-type -> t])
+       (string-append obj "." (format-ident x) "<" t ">"))
       ((if ,[format-expr -> test]
            ,[format-expr -> conseq]
            ,[format-expr -> alt])
