@@ -157,6 +157,7 @@
 
   (define (format-expr-default expr _)
     (match expr
+      ((empty-struct) "{0}")
       ((field ,[obj] ,x)
        (string-append obj "." (format-ident x)))
       ((field ,[obj] ,x ,[format-type -> t])
