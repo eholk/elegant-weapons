@@ -5,6 +5,7 @@
     iota
     define-match
     andmap
+    ormap
     ident?
     binop?
     relop?
