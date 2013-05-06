@@ -72,9 +72,9 @@
              (string-append "(" (format-call-args args) ")"))
          ";"))
       ((func ,[format-type -> type] ,[format-ident -> name]
-         ,[format-args -> args] ,stmt)
+         ,[format-args -> args] ,stmt* ...)
        (string-append type " " name "(" args ") {\n"
-         (indent-more (format-stmt stmt))
+         (join "\n" (indent-more (map format-stmt stmt*)))
          "\n}\n"))
       ((extern ,[format-type -> type] ,[format-ident -> name]
          (,[format-type -> args] ...))
