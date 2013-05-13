@@ -211,6 +211,7 @@
            ((#\-) (push "$"))
            ((#\$) (push "$$"))
            ((#\.) (push "$_"))
+           ((#\$) (push "$$$"))
            (else (push (string c)))))
        x)
       y))
@@ -218,7 +219,11 @@
   (define (format-ident-default ident _)
     (unless (symbol? ident)
       (error 'format-ident "could not format" ident))
-    (mangle-ident (symbol->string ident)))
+    (let ((reserved-words '(complex)))
+      (if (memq ident reserved-words)
+          (string-append "$$" (symbol->string ident))
+          (mangle-ident (symbol->string ident)))))
+  
   (define ident-fns (make-parameter `(,format-ident-default)))
   (define format-ident (format-sexp ident-fns))
 
