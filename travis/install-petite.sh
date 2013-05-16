@@ -8,4 +8,4 @@ cd csv8.4/custom
 
 ./configure
 make
-make install
+sudo make install
