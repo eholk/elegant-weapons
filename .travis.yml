@@ -1,4 +1,4 @@
 language: scheme
 
-before-install: ./travis/install-petite.sh
+install: ./travis/install-petite.sh
 script: ./run-tests.scm
