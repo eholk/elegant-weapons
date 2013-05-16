@@ -1,4 +1,7 @@
-language: scheme
+language: c
+
+compiler:
+ - gcc
 
 install: ./travis/install-petite.sh
 script: ./run-tests.scm
