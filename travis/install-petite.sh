@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget http://www.scheme.com/download/pcsv8.4-i3le.tar.gz
+wget http://www.scheme.com/download/pcsv8.4-a6le.tar.gz
 
 tar xzf pcsv8.4-i3le.tar.gz
 
