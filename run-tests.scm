@@ -1,5 +1,3 @@
-#!/usr/bin/petite --libdirs lib --script 
-
 (import
  (elegant-weapons print-c)
  (elegant-weapons parse-c))
