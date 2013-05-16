@@ -1,6 +1,7 @@
 (library
     (elegant-weapons sets)
-  (export union set-add difference intersection subset? set-equal?)
+  (export union set-add difference intersection subset? set-equal?
+          disjoint-union)
   (import (rnrs)
           (elegant-weapons compat))
 
@@ -17,6 +18,11 @@
           (let ((s (car s*)) (s* (cdr s*)))
             (fold-left (lambda (s1 s2) (fold-left set-add s1 s2)) s s*))))))
 
+  (define disjoint-union
+    (lambda (s1 s2)
+      (difference (union s1 s2)
+                  (intersection s1 s2))))
+  
   (define (intersection s . s*)
     (fold-left (lambda (s1 s2)
                  (filter (lambda (x)
