@@ -1,4 +1,4 @@
-#!/usr/bin/env petite --libdirs lib --script 
+#!/usr/bin/petite --libdirs lib --script 
 
 (import
  (elegant-weapons print-c)
