@@ -1,6 +1,7 @@
 (import
  (elegant-weapons print-c)
- (elegant-weapons parse-c))
+ (elegant-weapons parse-c)
+ (elegant-weapons tester))
 
 (define (print-parse-roundtrip e)
   (display "Round trip testing for...\n")
@@ -18,11 +19,25 @@
             (display "Success!\n")
             (error 'print-parse-roundtrip
                    "Parser round trip test failed."))))))
-    
-(print-parse-roundtrip
- '((func int main () (return (int 0)))))
 
-(print-parse-roundtrip
- '((func int main ()
-         (let x int (int 0))
-         (return (var x)))))
+(define (parse-roundtrip e error)
+  (let ((s (format-c e)))
+    (let ((tokens (tokenize-string s)))
+      (let ((parsed (parse-c tokens)))
+        (unless (equal? e parsed)
+          (error))))))
+
+(register-tests
+ ("simple" (lambda (error) #t))
+ ("parser-roundtrip-1" (lambda (error)
+                         (parse-roundtrip '((func int main ()
+                                                 (return (int 0))))
+                                          error)))
+ ("parser-roundtrip-2" (lambda (error)
+                         (parse-roundtrip
+                          '((func int main ()
+                                  (let x int (int 0))
+                                  (return (var x))))
+                          error))))
+
+(run-tests)
