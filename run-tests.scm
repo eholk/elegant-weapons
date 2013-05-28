@@ -1,7 +1,9 @@
 (import
  (elegant-weapons print-c)
  (elegant-weapons parse-c)
- (elegant-weapons tester))
+ (elegant-weapons tester)
+
+ (elegant-weapons sets-tests))
 
 (define (print-parse-roundtrip e)
   (display "Round trip testing for...\n")
@@ -27,17 +29,18 @@
         (unless (equal? e parsed)
           (error))))))
 
-(register-tests
- ("simple" (lambda (error) #t))
- ("parser-roundtrip-1" (lambda (error)
-                         (parse-roundtrip '((func int main ()
+(define-test-suite
+  basic
+  (simple (lambda (error) #t))
+  (parser-roundtrip-1 (lambda (error)
+                        (parse-roundtrip '((func int main ()
                                                  (return (int 0))))
-                                          error)))
- ("parser-roundtrip-2" (lambda (error)
-                         (parse-roundtrip
-                          '((func int main ()
-                                  (let x int (int 0))
-                                  (return (var x))))
-                          error))))
+                                         error)))
+  (parser-roundtrip-2 (lambda (error)
+                        (parse-roundtrip
+                         '((func int main ()
+                                 (let x int (int 0))
+                                 (return (var x))))
+                         error))))
 
-(run-tests)
+(run-tests basic sets)
