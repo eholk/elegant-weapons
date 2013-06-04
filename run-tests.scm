@@ -3,7 +3,8 @@
  (elegant-weapons parse-c)
  (elegant-weapons tester)
 
- (elegant-weapons sets-tests))
+ (elegant-weapons sets-tests)
+ (elegant-weapons record-case-tests))
 
 (define (print-parse-roundtrip e)
   (display "Round trip testing for...\n")
@@ -43,4 +44,4 @@
                                  (return (var x))))
                          error))))
 
-(run-tests basic sets)
+(run-tests basic sets record-case-tests)
