@@ -3,6 +3,7 @@
  (elegant-weapons parse-c)
  (elegant-weapons tester)
 
+ (elegant-weapons helpers-tests)
  (elegant-weapons sets-tests)
  (elegant-weapons record-case-tests))
 
@@ -44,4 +45,4 @@
                                  (return (var x))))
                          error))))
 
-(run-tests basic sets record-case-tests)
+(run-tests basic helpers sets record-case-tests)

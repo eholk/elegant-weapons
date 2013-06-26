@@ -94,9 +94,14 @@
         [else (cons i (loop (+ i 1)))]))))
 
 (define andmap
-  (lambda (p ls)
-    (or (null? ls)
-        (and (p (car ls)) (andmap p (cdr ls))))))
+  (lambda (p . ls)
+    (or (let loop ((ls ls))
+          (if (null? ls)
+              #t
+              (and (null? (car ls))
+                   (loop (cdr ls)))))
+        (and (apply p (map car ls))
+             (apply andmap p (map cdr ls))))))
 
 (define ormap
   (lambda (p ls)
