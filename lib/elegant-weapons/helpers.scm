@@ -6,6 +6,7 @@
     define-match
     andmap
     ormap
+    map-values
     ident?
     binop?
     relop?
@@ -107,6 +108,16 @@
   (lambda (p ls)
     (and (not (null? ls))
          (or (p (car ls)) (ormap p (cdr ls))))))
+
+(define map-values
+  (lambda (p . ls)
+    ;; We require at least one element
+    (if (andmap (lambda (x) (null? (cdr x))) ls)
+        (let-values ((v* (apply p (map car ls))))
+          (apply values (map list v*)))
+        (let-values ((rest* (apply map-values p (map cdr ls)))
+                     (this* (apply p (map car ls))))
+          (apply values (map cons this* rest*))))))
 
 (define ident? symbol?)
 
