@@ -73,9 +73,13 @@
          ";"))
       ((func ,[format-type -> type] ,[format-ident -> name]
          ,[format-args -> args] ,stmt* ...)
-       (string-append type " " name "(" args ") {\n"
-         (join "\n" (indent-more (map format-stmt stmt*)))
-         "\n}\n"))
+       (string-append type " " name "(" args ")"
+                      (if (null? stmt*)
+                          ";\n"
+                          (string-append
+                           " {\n"
+                           (join "\n" (indent-more (map format-stmt stmt*)))
+                           "\n}\n"))))
       ((extern ,[format-type -> type] ,[format-ident -> name]
          (,[format-type -> args] ...))
        (string-append type " " name "(" (join ", " args) ");\n"))
