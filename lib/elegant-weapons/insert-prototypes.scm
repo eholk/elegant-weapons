@@ -19,6 +19,8 @@
   (define-match Decl
     ((func ,t ,name ,args . ,stmt*)
      (values '() `((func ,t ,name ,args)) `((func ,t ,name ,args . ,stmt*))))
+    ((kernel . ,_)
+     (values '() '() `((kernel . ,_))))
     (,else (values (list else) '() '())))
     
   )
