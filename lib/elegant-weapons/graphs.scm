@@ -25,9 +25,11 @@
                   (for-each
                     (lambda (w)
                       (if (hashtable-contains? indices w)
-                          (hashtable-set! lowlink v
-                                          (min (hashtable-ref lowlink v #f)
-                                               (hashtable-ref indices w #f)))
+                          (if (memq w stack)
+                              (hashtable-set!
+                               lowlink v
+                               (min (hashtable-ref lowlink v #f)
+                                    (hashtable-ref indices w #f))))
                           (begin
                             (strong-connect w)
                             (hashtable-set!
@@ -38,11 +40,11 @@
                       (if edges (cdr edges) '())))
                   (if (eq? (hashtable-ref lowlink v #f)
                            (hashtable-ref indices v #f))
-                      (let loop ((scc (list v))
+                      (let loop ((scc '())
                                  (w (pop!)))
-                        (if (eq? w v)
-                            (set! sccs (cons scc sccs))
-                            (loop (cons w scc) (pop!))))))))
+                        (set! sccs (cons (cons w scc) sccs))
+                        (unless (eq? w v)
+                          (loop (cons w scc) (pop!))))))))
         (for-each
           (lambda (node)
             (let ((v (car node)))
