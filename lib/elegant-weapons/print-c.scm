@@ -130,6 +130,10 @@
          ,[format-expr -> i-expr] ,[format-expr -> val-expr])
        (indent-before
          (string-append vec-expr "[" i-expr "] = " val-expr ";")))
+      ((goto ,name)
+       (indent-before (string-append "goto " (format-ident name) ";")))
+      ((label ,name)
+       (indent-before (string-append (format-ident name) ":")))
       ((while ,[format-expr -> expr] ,stmt)
        (string-append
          (indent-before (string-append "while(" expr ")\n"))
