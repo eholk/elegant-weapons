@@ -97,6 +97,10 @@
          (join "\n" (indent-more (map format-stmt stmt*)))
          "\n"
          (indent-before "}")))
+      ((let ,[format-ident -> ident] (fixed-array ,[format-type -> type] ,i)
+            ,[format-expr -> expr])
+       (indent-before
+        (string-append type " " ident "[" (number->string i) "] = " expr ";")))
       ((let ,[format-ident -> ident] ,[format-type -> type]
             ,[format-expr -> expr])
        (indent-before
@@ -133,7 +137,7 @@
       ((goto ,name)
        (indent-before (string-append "goto " (format-ident name) ";")))
       ((label ,name)
-       (indent-before (string-append (format-ident name) ":")))
+       (indent-before (string-append (format-ident name) ": 42;")))
       ((while ,[format-expr -> expr] ,stmt)
        (string-append
          (indent-before (string-append "while(" expr ")\n"))
@@ -244,6 +248,10 @@
        (string-append t " &"))
       ((const-ptr ,[t])
        (string-append t " __global const *"))
+      ((fixed-array ,t ,i)
+       (error 'format-type-default
+              "Directly formatting fixed-size arrays is a bad idea."
+              `(fixed-array ,t ,i)))
       ((struct (,[format-ident -> x] ,[t]) ...)
        (string-append "struct {\n"
                       (indent-more
