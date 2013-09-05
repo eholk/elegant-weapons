@@ -137,7 +137,7 @@
       ((goto ,name)
        (indent-before (string-append "goto " (format-ident name) ";")))
       ((label ,name)
-       (indent-before (string-append (format-ident name) ": 42;")))
+       (indent-before (string-append (format-ident name) ":")))
       ((while ,[format-expr -> expr] ,stmt)
        (string-append
          (indent-before (string-append "while(" expr ")\n"))
