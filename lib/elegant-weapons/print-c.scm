@@ -225,6 +225,7 @@
            ((#\.) (push "$_"))
            ((#\$) (push "$$$"))
            ((#\>) (push "$v"))
+           ((#\!) (push "$b"))
            (else (push (string c)))))
        x)
       y))
