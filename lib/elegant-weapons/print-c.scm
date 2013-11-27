@@ -245,11 +245,11 @@
     (match t
       (u64 "uint64_t")
       ((ptr ,[t])
-       (string-append t " __global *"))
+       (string-append "__global " t " *"))
       ((ref ,[t])
        (string-append t " &"))
       ((const-ptr ,[t])
-       (string-append t " __global const *"))
+       (string-append "__global const " t " *"))
       ((fixed-array ,t ,i)
        (error 'format-type-default
               "Directly formatting fixed-size arrays is a bad idea."
