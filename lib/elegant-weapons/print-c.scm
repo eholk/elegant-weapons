@@ -246,6 +246,8 @@
       (u64 "uint64_t")
       ((ptr ,[t])
        (string-append "__global " t " *"))
+      ((ptr local ,[t])
+       (string-append "__local " t " *"))
       ((ref ,[t])
        (string-append t " &"))
       ((const-ptr ,[t])
