@@ -248,6 +248,8 @@
        (string-append "__global " t " *"))
       ((ptr local ,[t])
        (string-append "__local " t " *"))
+      ((ptr private ,[t])
+       (string-append "__private " t " *"))
       ((ref ,[t])
        (string-append t " &"))
       ((const-ptr ,[t])
