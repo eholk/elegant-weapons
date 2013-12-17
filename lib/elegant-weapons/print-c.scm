@@ -306,6 +306,8 @@
       ((*) "*")
       ((-) "-")
       ((/) "/")
+      ((<<) "<<")
+      ((>>) ">>")
       ((mod) "%")
       (else (error 'format-binop "could not format" op))))
   (define binop-fns (make-parameter `(,format-binop-default)))
