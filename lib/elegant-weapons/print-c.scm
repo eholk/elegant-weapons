@@ -301,6 +301,7 @@
   (define (format-binop-default op _)
     (case op
       ((bitwise-or) "|")
+      ((bitwise-xor) "^")
       ((+) "+")
       ((*) "*")
       ((-) "-")
