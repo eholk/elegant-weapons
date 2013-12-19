@@ -220,12 +220,13 @@
       (string-for-each
        (lambda (c)
          (case c
-           ((#\-) (push "$"))
+           ((#\-) (push "$d"))
            ((#\$) (push "$$"))
            ((#\.) (push "$_"))
-           ((#\$) (push "$$$"))
+           ((#\$) (push "$s"))
            ((#\>) (push "$v"))
            ((#\!) (push "$b"))
+           ((#\?) (push "$p"))
            (else (push (string c)))))
        x)
       y))
