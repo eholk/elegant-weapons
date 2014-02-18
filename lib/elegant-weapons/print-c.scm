@@ -203,7 +203,7 @@
       ((var ,var) (format-ident var))
       ((char ,c) (format-char-literal c))
       ((int ,n) (number->string n))
-      ((u64 ,n) (number->string n))
+      ((u64 ,n) (string-append (number->string n) "u"))
       ((str ,s) (string-append "\"" (escape-string-literal s) "\""))
       ((float ,f) (number->string f))
       ((c-expr ,x) (symbol->string x))
