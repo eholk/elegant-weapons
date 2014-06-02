@@ -4,6 +4,7 @@
     indent-more
     format-c
     print-c
+    decl-fns
     run-format
     format-append
     format-join
@@ -17,7 +18,7 @@
     format-arg
     format-binop
     format-relop
-    decl-fns
+    mangle-ident
     stmt-fns
     expr-fns
     ident-fns
