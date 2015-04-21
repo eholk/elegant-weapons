@@ -1,10 +1,13 @@
 (library
     (elegant-weapons sets)
   (export union set-add difference intersection subset? set-equal?
-          disjoint-union)
+          disjoint-union set)
   (import (rnrs)
           (elegant-weapons compat))
 
+  (define (set . x*)
+    (fold-left set-add '() x*))
+  
   (define (set-add s x)
     (if (member x s)
         s
