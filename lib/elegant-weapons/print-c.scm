@@ -265,6 +265,7 @@
            ((#\?) (push "$p"))
            ((#\*) (push "$x"))
            ((#\^) (push "$c"))
+           ((#\+) (push "$t"))
            (else (push (string c)))))
        x)
       y))
