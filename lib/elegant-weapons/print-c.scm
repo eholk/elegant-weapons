@@ -240,7 +240,11 @@
       ((char ,c) (format-char-literal c))
       ((int ,n) (number->string n))
       ((u64 ,n) (format-append (number->string n) "u"))
-      ((str ,s) (format-append "\"" (escape-string-literal s) "\""))
+      ((str ,s) (format-append "\"" (begin
+                                      ;;(display "Escaping string of length ")
+                                      ;;(display (string-length s))
+                                      ;;(newline)
+                                      (escape-string-literal s)) "\""))
       ((float ,f) (number->string f))
       ((c-expr ,x) (symbol->string x))
       ((call ,[format-expr -> f] . ,[format-call-args -> args])
