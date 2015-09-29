@@ -369,18 +369,27 @@
   (define relop-fns (make-parameter `(,format-relop-default)))
   (define format-relop (format-sexp relop-fns))
 
-  (define escape-string-literal
-    (lambda (s)
-      (if (zero? (string-length s))
-          ""
-          (format-append
-            (case (string-ref s 0)
-              ((#\newline) "\\n\"\n\"")
-              ((#\") "\\\"")
-              (else (string (string-ref s 0))))
-            (escape-string-literal
-              (substring s 1 (string-length s)))))))
-
+  (define (escape-string-literal s)
+    (define (escape c)
+      (case c
+        ((#\newline) "\\n\"\n\"")
+        ((#\") "\\\"")
+        (else #f)))
+    (let ((len (string-length s)))
+      (letrec ((loop (lambda (i)
+                       (if (< i len)
+                           (let ((e (escape (string-ref s i))))
+                             (if e
+                                 (format-append e (loop (+ 1 i)))
+                                 (find-substring i i)))
+                           "")))
+               (find-substring (lambda (start end)
+                                 (if (and (< end len) (not (escape (string-ref s end))))
+                                     (find-substring start (+ 1 end))
+                                     (format-append (substring s start end)
+                                                    (loop end))))))
+        (loop 0))))
+  
   (define (format-char-literal c)
     (format-append "'"
                    (case c
